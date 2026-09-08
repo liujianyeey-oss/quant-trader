@@ -1,0 +1,48 @@
+# 量化交易程序配置
+
+# 标的池
+universe:
+  etfs:            # ETF 列表（数据走 fund_etf_hist_em）
+    - "510300"     # 沪深300ETF
+    - "510500"     # 中证500ETF
+    - "159915"     # 创业板ETF
+    - "588000"     # 科创50ETF
+  stocks: []       # 大盘个股（数据走 stock_zh_a_hist），如 ["600519", "600036"]
+  defensive: "518880"   # 防守资产：黄金ETF（网格调参选定，见 reports/optimize_results.csv）
+
+benchmark: "510300"   # 基准（用于对比）
+
+# 策略参数
+strategy:
+  momentum_days: 20     # 动量计算窗口
+  rebalance_days: 5     # 调仓周期（交易日）
+  ma_fast: 5
+  ma_slow: 20
+  trend_ma: 60          # 趋势过滤均线（网格调参选定，0=关闭）
+
+# 五组分批动量策略（staggered）：5 组分别在周一~周五收盘更新，波动率控仓
+staggered:
+  momentum_days: 20     # 动量窗口
+  trend_ma: 60          # 趋势过滤均线
+  vol_window: 60        # 波动率估计窗口（日收益个数）
+  vol_budget: 0.12      # 每组波动率预算（非回撤上限）
+  n_groups: 5           # 分组数（周一~周五各一组）
+
+# 交易成本
+cost:
+  etf_commission: 0.0001      # ETF 佣金 万1
+  stock_commission: 0.00025   # 个股佣金 万2.5
+  stamp_tax: 0.0005           # 卖出印花税 0.05%（仅个股）
+  slippage: 0.001             # 滑点 0.1%
+  min_commission: 0           # 最低佣金（元），0 表示不启用；券商常见为 5
+
+# 回测
+backtest:
+  start: "2019-01-01"
+  end: null             # null 表示到最新
+  initial_cash: 1000000
+
+# 数据
+data:
+  cache_dir: "data_cache"
+  adjust: "qfq"         # 前复权

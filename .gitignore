@@ -1,0 +1,13 @@
+# 环境与系统
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# 可再生成的产物
+data_cache/
+logs/
+reports/
+signals/
+
+# paper/ 台账是唯一实盘跟踪记录，必须纳入版本管理，不要忽略
