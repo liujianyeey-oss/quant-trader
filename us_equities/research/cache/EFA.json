@@ -1,0 +1,13 @@
+{
+  "symbol": "EFA",
+  "fetched_at": "2026-09-10T10:37:28.648005+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/EFA_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "2554375a9acc8d1e0186e61de287f7dfed6a042e1f7fb8afa8d6214c383412b4",
+  "factor_sha256": "18c1b07da532b686b4cdc8a57687b6cd64dd0f034dc259ce4a083bf64d396dd5",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

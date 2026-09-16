@@ -65,7 +65,16 @@ def load_benchmark(cfg, loader, start, end):
 
 
 def cmd_backtest(args):
+    if args.strategy == "us_swing":
+        from us_equities.cli import run
+        return run(args, None, BASE_DIR)
     cfg = load_config(args.config)
+    if args.strategy == "hk_swing":
+        from hk_connect.swing_cli import run
+        return run(args, cfg, BASE_DIR)
+    if args.strategy == "hk_connect":
+        from hk_connect.cli import run
+        return run(args, cfg, BASE_DIR)
     start = args.start or cfg["backtest"]["start"]
     end = args.end or cfg["backtest"]["end"]
     loader = build_loader(cfg)
@@ -172,7 +181,60 @@ def cmd_paper_report(args):
         print(f"净值曲线已保存：{png}")
 
 
+def cmd_paper_us_update(args):
+    """美股 donchian 台账每日更新（北京时间早晨 cron 调用，对应美股收盘后）。"""
+    from us_equities.paper_us import TRACKED, update_account, load_universe
+
+    paper_dir = os.path.join(BASE_DIR, "paper_us")
+    os.makedirs(paper_dir, exist_ok=True)
+    try:
+        data = load_universe(paper_dir)
+    except Exception as e:
+        print(f"错误：美股数据不可用且无缓存，台账更新终止（{e}）", file=sys.stderr)
+        sys.exit(1)
+    latest = max(df["date"].max() for df in data.values())
+    print(f"美股数据截至 {latest:%Y-%m-%d}（纽约交易日）")
+    for name, symbol in TRACKED.items():
+        for action in update_account(data, name, symbol, paper_dir):
+            print(action)
+
+
+def cmd_paper_us_report(args):
+    from us_equities.paper_us import TRACKED, build_report, load_universe
+
+    paper_dir = os.path.join(BASE_DIR, "paper_us")
+    try:
+        data = load_universe(paper_dir)
+    except Exception as e:
+        print(f"错误：美股数据不可用（{e}）", file=sys.stderr)
+        sys.exit(1)
+    d = data["SPY"].set_index("date")
+    bench = (d["close"] * d["factor"]).sort_index()
+
+    text, nav_curves, ideal_curves = build_report(data, bench, paper_dir)
+    print(text)
+
+    reports_dir = os.path.join(BASE_DIR, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    txt_path = os.path.join(reports_dir, f"us_paper_report_{ts}.txt")
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print(f"\n报表已保存：{txt_path}")
+    if nav_curves:
+        from paper import plot_paper_nav
+        png = os.path.join(reports_dir, f"us_paper_nav_{ts}.png")
+        plot_paper_nav(nav_curves, ideal_curves, bench, png)
+        print(f"净值曲线已保存：{png}")
+
+
 def cmd_optimize(args):
+    if args.strategy == "us_swing":
+        from us_equities.cli import run
+        return run(args, None, BASE_DIR)
+    if args.strategy == "hk_swing":
+        from hk_connect.swing_cli import run
+        return run(args, load_config(args.config), BASE_DIR)
     from optimize import run_optimize, format_top_table
 
     cfg = load_config(args.config)
@@ -191,7 +253,16 @@ def cmd_optimize(args):
 
 
 def cmd_signal(args):
+    if args.strategy == "us_swing":
+        from us_equities.cli import run
+        return run(args, None, BASE_DIR)
     cfg = load_config(args.config)
+    if args.strategy == "hk_swing":
+        from hk_connect.swing_cli import run
+        return run(args, cfg, BASE_DIR)
+    if args.strategy == "hk_connect":
+        from hk_connect.cli import run
+        return run(args, cfg, BASE_DIR)
     end = datetime.now().strftime("%Y-%m-%d")
     # 信号只需近期数据，但动量/均线需要足够窗口，多取一些历史
     start = cfg["backtest"]["start"]
@@ -235,6 +306,11 @@ def cmd_signal(args):
     print("提示：信号基于最近收盘价，若需执行请在下一交易日开盘操作。仅供研究，不构成投资建议。")
 
 
+def cmd_hk_universe(args):
+    from hk_connect.cli import run_universe
+    return run_universe(args, load_config(args.config), BASE_DIR)
+
+
 def main():
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(message)s")
     parser = argparse.ArgumentParser(
@@ -243,21 +319,44 @@ def main():
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_bt = sub.add_parser("backtest", help="运行历史回测")
-    p_bt.add_argument("--strategy", choices=["momentum", "dual_ma", "staggered"],
+    p_bt.add_argument("--strategy", choices=["momentum", "dual_ma", "staggered", "hk_connect", "hk_swing", "us_swing"],
                       default="momentum")
     p_bt.add_argument("--start", help="回测开始日期，如 2019-01-01")
     p_bt.add_argument("--end", help="回测结束日期，默认最新")
     p_bt.add_argument("--code", help="dual_ma 策略的标的代码，默认标的池第一个")
+    p_bt.add_argument("--research", action="store_true", help="港/美股开发回测：接受报告中列明的数据局限")
+    p_bt.add_argument("--offline", action="store_true", help="港/美股仅使用本地缓存")
+    p_bt.add_argument("--capital-usd", type=float, help="us_swing 美元现金账户资金")
+    p_bt.add_argument("--capital-hkd", type=float, help="hk_swing 研究账户初始港币资金")
+    p_bt.add_argument("--params", help="hk_swing/us_swing 参数 JSON，默认使用基线")
     p_bt.set_defaults(func=cmd_backtest)
 
     p_sig = sub.add_parser("signal", help="基于最新数据输出当前持仓信号")
-    p_sig.add_argument("--strategy", choices=["momentum", "dual_ma", "staggered"],
+    p_sig.add_argument("--strategy", choices=["momentum", "dual_ma", "staggered", "hk_connect", "hk_swing", "us_swing"],
                        default="momentum")
     p_sig.add_argument("--code", help="dual_ma 策略的标的代码，默认标的池第一个")
+    p_sig.add_argument("--offline", action="store_true", help="港股通仅使用本地缓存，过期则拒绝输出信号")
+    p_sig.add_argument("--research", action="store_true", help="hk_swing 开发模拟状态，非真实账户")
+    p_sig.add_argument("--capital-usd", type=float, help="us_swing 美元现金账户资金")
+    p_sig.add_argument("--capital-hkd", type=float, help="hk_swing 研究资金")
+    p_sig.add_argument("--params", help="hk_swing 参数 JSON")
+    p_sig.add_argument("--start", help="hk_swing 模拟账户起点")
+    p_sig.add_argument("--end", help="hk_swing 数据截止日期")
     p_sig.set_defaults(func=cmd_signal)
+
+    p_hk = sub.add_parser("hk-universe", help="更新沪港通南向可买股票和 HKEX 每手股数快照")
+    p_hk.set_defaults(func=cmd_hk_universe)
 
     p_opt = sub.add_parser("optimize", help="动量轮动策略网格调参（样本内排名 + 样本外验证）")
     p_opt.add_argument("--top", type=int, default=15, help="打印 top N 结果，默认 15")
+    p_opt.add_argument("--strategy", choices=["momentum", "hk_swing", "us_swing"], default="momentum")
+    p_opt.add_argument("--research", action="store_true", help="hk_swing 有偏开发回测与选参")
+    p_opt.add_argument("--offline", action="store_true", help="hk_swing 仅使用缓存")
+    p_opt.add_argument("--start", help="hk_swing 开发起点")
+    p_opt.add_argument("--end", help="hk_swing 开发截止日期")
+    p_opt.add_argument("--capital-usd", type=float, help="us_swing 美元现金账户资金")
+    p_opt.add_argument("--capital-hkd", type=float, help="hk_swing 训练账户资金")
+    p_opt.add_argument("--params", help="hk_swing 基线参数 JSON")
     p_opt.set_defaults(func=cmd_optimize)
 
     p_pu = sub.add_parser("paper-update", help="模拟盘台账每日更新（建议收盘后运行）")
@@ -265,6 +364,12 @@ def main():
 
     p_pr = sub.add_parser("paper-report", help="模拟盘台账分析报表")
     p_pr.set_defaults(func=cmd_paper_report)
+
+    p_pus_u = sub.add_parser("paper-us-update", help="美股 donchian 台账每日更新（美股收盘后运行）")
+    p_pus_u.set_defaults(func=cmd_paper_us_update)
+
+    p_pus_r = sub.add_parser("paper-us-report", help="美股 donchian 台账分析报表")
+    p_pus_r.set_defaults(func=cmd_paper_us_report)
 
     args = parser.parse_args()
     args.func(args)

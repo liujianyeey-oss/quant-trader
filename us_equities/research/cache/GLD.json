@@ -1,0 +1,13 @@
+{
+  "symbol": "GLD",
+  "fetched_at": "2026-09-10T10:37:26.443293+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/GLD_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "32c610b7ebdef884775ea5b04d348c9094abb5231fdf4c90b6f00fe8520d8e94",
+  "factor_sha256": "34abcad8dae092c36acf81dd1e24e71bc459d1511e2db1e936fa30f210d725dc",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

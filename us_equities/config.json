@@ -1,0 +1,33 @@
+{
+  "start": "2019-01-02",
+  "end": "2026-09-08",
+  "train_end": "2022-12-30",
+  "validation_end": "2024-12-31",
+  "initial_cash_usd": 50000,
+  "universe_note": "Predeclared 118-name multi-sector current survivor watchlist; not point-in-time US universe. No earnings timestamp dataset.",
+  "sectors": {
+    "semiconductors": "NVDA AMD INTC MU AMAT LRCX KLAC AVGO QCOM TXN ADI MCHP ON MPWR",
+    "software": "MSFT ADBE CRM NOW INTU ORCL SNOW PLTR NET DDOG CRWD ZS PANW OKTA ZM DOCU FSLY",
+    "internet": "GOOGL META AMZN NFLX UBER ABNB DASH ROKU SNAP PINS SHOP ETSY",
+    "hardware": "AAPL DELL HPE HPQ STX WDC SMCI",
+    "consumer": "TSLA F GM NKE LULU SBUX CMG CROX PTON BYND W RCL CCL NCLH",
+    "financial": "JPM BAC GS MS C SCHW COF PYPL XYZ COIN HOOD SOFI AFRM",
+    "healthcare": "LLY UNH JNJ PFE ABBV AMGN GILD REGN VRTX MRNA",
+    "energy": "XOM CVX OXY SLB HAL DVN FSLR ENPH SEDG",
+    "industrial": "CAT DE BA GE RTX LMT UPS FDX URI",
+    "materials": "FCX NUE STLD AA CLF NEM ALB",
+    "defensive": "WMT COST TGT PG KO PEP"
+  },
+  "params": {
+    "kind": "breakout",
+    "volume_ratio": 1.5,
+    "max_hold": 8,
+    "market_filter": true
+  },
+  "cost": {
+    "commission_per_share": 0.005,
+    "minimum_commission": 1.0,
+    "sell_fee_bps": 0.5,
+    "slippage_bps": 10
+  }
+}

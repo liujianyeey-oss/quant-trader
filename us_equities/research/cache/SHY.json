@@ -1,0 +1,13 @@
+{
+  "symbol": "SHY",
+  "fetched_at": "2026-09-10T10:37:26.039470+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/SHY_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "ee484162affa6f2b8db5d5e5dd8b36a6765c5cf49c1b14b1c36761b7a1c297dd",
+  "factor_sha256": "1f09e4c9b7a27a9b689810613326d29bfbd2e6ddd2ce52dd2a911ed34cb69791",
+  "first": "2017-08-07",
+  "last": "2026-09-09"
+}

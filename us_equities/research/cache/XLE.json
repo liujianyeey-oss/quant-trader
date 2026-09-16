@@ -1,0 +1,21 @@
+{
+  "symbol": "XLE",
+  "fetched_at": "2026-09-10T10:37:20.072930+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/XLE_qfq.js",
+  "quarantined": [
+    {
+      "date": "2018-11-15 00:00:00",
+      "open": 65.01,
+      "high": 66.47,
+      "low": 65.44,
+      "close": 66.39
+    }
+  ],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "a707bac54407101e05c25d6b0b57ac743fe344b97c1dd4e1c535f2695a01d9f0",
+  "factor_sha256": "4b70e1503646cb930f93e1a21f75cb02c111abcfb95ee292dc80107bfb8c6942",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

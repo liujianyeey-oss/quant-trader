@@ -1,0 +1,13 @@
+{
+  "symbol": "XLU",
+  "fetched_at": "2026-09-10T10:37:22.634101+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/XLU_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "1a124ee1888db6a0125199103c89e962ede8c32fc57e840b3954c2dc6890bd25",
+  "factor_sha256": "788ad2519c6d0939a7f41466d0e57a9880c6e19fb31aecf0d02ed91801a455f5",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

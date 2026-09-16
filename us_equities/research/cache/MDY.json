@@ -1,0 +1,13 @@
+{
+  "symbol": "MDY",
+  "fetched_at": "2026-09-10T10:37:18.232908+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/MDY_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "c525d759d2b97fd879161f66c0c9fd874f3348e4aaf9cdd4cc27d1a6d5c44ef4",
+  "factor_sha256": "13960e8211cfcf19266d787e896301a23bb2bde62f0ed2e0a8d7b9b41d496e6b",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

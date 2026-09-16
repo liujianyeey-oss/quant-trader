@@ -1,0 +1,13 @@
+{
+  "symbol": "XLK",
+  "fetched_at": "2026-09-10T10:37:19.211635+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/XLK_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "1b4e30b0fb2a9b63eb7dc788a03073fe60c25099ecc67b8ba549e121d22532b2",
+  "factor_sha256": "39cf8eade3744c754b4769b59bb3a7d7f36c495eef4d3fc9df176d429ba5833d",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

@@ -1,8 +1,16 @@
-# A股量化交易程序（回测 + 每日信号提醒）
+# A股与港股通量化研究程序（回测 + 每日信号提醒）
 
 基于 Python + akshare 的 A股量化研究工具，支持 ETF/个股的历史回测与每日持仓信号提醒。**不做实盘，仅供研究学习，不构成任何投资建议。**
 
 > 建设期的全部教训（方法论/工程/运维）见 **[docs/LESSONS.md](docs/LESSONS.md)**——改代码或调参数前先读它。
+
+美股正股现金短线模块 `us_swing` 已完成84组开发比较，训练选定10日相对强度轮动。复现选定版本：`python main.py backtest --strategy us_swing --research --offline --params us_equities/research_selected.json`。全期累计262.96%、年化18.27%、最大回撤29.42%，但高滑点下失效，详见 **[美股结果报告](docs/US_SWING_RESULTS.md)** 和 **[算法说明](docs/US_SWING.md)**。结果有选样和数据覆盖偏差，不代表未来收益。
+
+新增两周内短线策略 `hk_swing`：`python main.py backtest --strategy hk_swing --research --offline`；训练段选参用 `python main.py optimize --strategy hk_swing --research --offline`。实现收盘确认、次日开盘、每笔持仓期限和风险管理，详见 **[短线算法与优化说明](docs/HK_SWING.md)**。当前为纯量价开发研究，未验证实盘盈利能力。
+
+本轮结果见 **[短线回测报告](docs/HK_SWING_RESULTS.md)**：50万HKD全期累计3.67%，后段开发验证−3.63%；18组参数选回基线，没有优化增益。
+
+新增港股通股票模块 `hk_connect`，采用独立 HKD 研究账户，支持官方 SH 南向资格/手数更新、周度趋势动量、分散控仓和港股双边费用。快速运行 `python main.py signal --strategy hk_connect`；探索回测用 `python main.py backtest --strategy hk_connect --research --start 2025-07-01`。详细范围、资金门槛、历史资格和分红/汇率限制见 **[港股通模块说明](docs/HK_CONNECT.md)**。下文的 A 股日线、费用及模拟盘说明不适用于港股模块。
 
 ## 环境要求
 
@@ -81,7 +89,28 @@ cron 配置（`paper/daily_update.sh` 已带绝对路径，cron 环境无用户 
 47 16 * * 1-5 /Users/liujianye10/quant-trader/paper/daily_update.sh
 ```
 
-### 6. 配置（config.yaml）
+### 6. 美股 donchian 台账（paper_us/）
+
+与 A股台账并列、完全独立（不动 A股任何文件）。跟踪 donchian_qqq / donchian_spy 两个账户（各 $50,000）：收盘价突破前 20 日最高价买、跌破前 10 日最低价卖（`us_equities/research` 的 Donchian 实现，与回测同口径），成本 $0.005/股 min$1 + 卖出 0.5bps + 滑点 10bps。
+
+```bash
+python main.py paper-us-update   # 每日更新（信号次日真实开盘价成交、幂等、缺跑逐日补记）
+python main.py paper-us-report   # 分析报表（reports/us_paper_*）
+python paper_us/notify_us.py     # 信号变化 macOS 通知（含"今晚 21:30 北京美股开盘执行"提示）
+```
+
+- 数据：新浪美股日线+复权因子，每日强制刷新（缓存兜底），只保留已完成纽约交易日
+- 存储 `paper_us/`（account/trades/nav/signals 与 A股台账同格式，trades 含 signal_close/dev_bps）
+- 时区：美股收盘 = 北京 04:00（夏令时）/05:00（冬令时），cron 定周二至周六早晨（对应美股周一至周五收盘）；macOS cron 睡眠漏跑由逐日补记兜住
+
+cron 配置（`paper_us/daily_update_us.sh` 已带绝对路径）：
+
+```cron
+# 周二至周六 08:47（北京时间）更新美股台账
+47 8 * * 2-6 /Users/liujianye10/quant-trader/paper_us/daily_update_us.sh
+```
+
+### 7. 配置（config.yaml）
 
 - `universe.etfs` / `universe.stocks`：标的池（ETF 走 `fund_etf_hist_em`，个股走 `stock_zh_a_hist`，均为前复权日线）
 - `universe.defensive`：防守资产（默认 518880 黄金ETF，经网格调参选定）

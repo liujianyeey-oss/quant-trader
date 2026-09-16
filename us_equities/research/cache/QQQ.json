@@ -1,0 +1,13 @@
+{
+  "symbol": "QQQ",
+  "fetched_at": "2026-09-10T10:37:16.621479+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/QQQ_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "33969a5b6396c7612d3a66f45d23f468936ac2d94bbcdcb1f6b8130c1187573b",
+  "factor_sha256": "bcc623c3e455f67287d61203080600586e3506c7d036316ccf9c266f91ef6496",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

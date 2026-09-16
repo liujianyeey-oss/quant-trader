@@ -1,0 +1,13 @@
+{
+  "symbol": "SPY",
+  "fetched_at": "2026-09-10T10:37:16.248233+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/SPY_qfq.js",
+  "quarantined": [],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "45a07cabaef836d989ba8f965fe02b6fccce53ec0e69f83e68703d5a3506d06f",
+  "factor_sha256": "601defd098bdf75dad640fe5015dac6283a5c126a9c3fc9d9525e77f8f3d3bb6",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}

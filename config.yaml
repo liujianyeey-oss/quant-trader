@@ -46,3 +46,90 @@ backtest:
 data:
   cache_dir: "data_cache"
   adjust: "qfq"         # 前复权
+
+# 港股通独立 HKD 研究账户，不会自动换汇或转入上方人民币资金。
+hk_connect:
+  initial_cash_hkd: 100000
+  start: "2025-07-01"
+  universe_file: "data_cache/hk_connect/universe.json"
+  cache_dir: "data_cache/hk_connect/prices"
+  calendar_csv: null  # date,is_open (0/1)，覆盖回测里每个港股行情日
+  max_stale_days: 7
+  # 起步观察池，并非推荐买入名单；与官方 SH 通道名单取交集。
+  # 空列表 [] 为全名单，首次逐只拉数耗时较长。
+  watchlist: ["00005", "00388", "00700", "00836", "00857", "00883",
+              "00939", "00941", "01211", "01398", "01801", "01810",
+              "02318", "02319", "03690", "09988"]
+  strategy:
+    momentum_fast: 60
+    momentum_slow: 120
+    trend_window: 120
+    vol_window: 60
+    liquidity_window: 20
+    top_n: 5
+    min_positions: 3   # 建仓时至少三只可负担整数手，否则保留现金
+    rebalance_weekday: 2  # 周三或其后本周首个交易日；周一=0
+    max_weight: 0.20
+    max_gross: 0.80
+    vol_target: 0.12     # 加权单股年化波动之和预算，不是回撤上限
+    min_turnover_hkd: 50000000
+    min_price_hkd: 3.0
+  cost:
+    # 当前费用情景，不回溯历史税率；佣金/最低收费按实际券商修改。
+    commission: 0.0003
+    min_commission_hkd: 5.0
+    stamp_duty: 0.001    # 双边向上取整到 1 HKD，免税股按官方字段排除
+    trading_fee: 0.0000565
+    sfc_levy: 0.000027
+    afrc_levy: 0.0000015
+    settlement_fee: 0.000042  # HKSCC 费率情景，南向实际转嫁按券商账单核对
+    extra_fee: 0.0
+    slippage: 0.001      # 单边 10 bps，不保证开盘成交
+
+# 两周内短线研究：收盘确认、次日开盘，定时到期按收盘成交假设。
+hk_swing:
+  initial_cash_hkd: 500000
+  start: "2025-07-01"
+  end: "2026-09-08"     # 固定本轮研究截止日；实时复核须显式指定 --end
+  train_split: "2025-11-01"
+  train_end: "2026-01-31"
+  benchmark: "02800"   # 盈富基金价格基准，不含分红，不占股票策略持仓
+  events_csv: null     # code,published_at,approved(0/1),source
+  watchlist: ["00005", "00388", "00700", "00836", "00857", "00883",
+              "00939", "00941", "01211", "01398", "01801", "01810",
+              "02318", "02319", "03690", "09988", "00981", "01347",
+              "09926", "02269", "02899", "02600", "09992", "09868", "02015", "01024"]
+  sectors:
+    "00005": financial
+    "00388": financial
+    "00700": internet
+    "00836": utility
+    "00857": energy
+    "00883": energy
+    "00939": financial
+    "00941": telecom
+    "01211": auto
+    "01398": financial
+    "01801": healthcare
+    "01810": technology
+    "02318": financial
+    "02319": consumer
+    "03690": internet
+    "09988": internet
+    "00981": semiconductor
+    "01347": semiconductor
+    "09926": healthcare
+    "02269": healthcare
+    "02899": materials
+    "02600": materials
+    "09992": consumer
+    "09868": auto
+    "02015": auto
+    "01024": internet
+  params:
+    kind: breakout
+    lookback: 20
+    volume_ratio: 1.8
+    max_hold: 8
+    max_calendar_days: 14
+    require_catalyst: false # 缺事件数据时明确为纯量价对照

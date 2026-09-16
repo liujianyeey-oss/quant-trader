@@ -1,0 +1,21 @@
+{
+  "symbol": "XLRE",
+  "fetched_at": "2026-09-10T10:37:23.593983+00:00",
+  "source": "https://stock.finance.sina.com.cn/usstock/api/json_v2.php/US_MinKService.getDailyK",
+  "factor_source": "https://finance.sina.com.cn/us_stock/company/reinstatement/XLRE_qfq.js",
+  "quarantined": [
+    {
+      "date": "2017-07-11 00:00:00",
+      "open": 31.52,
+      "high": 31.51,
+      "low": 31.21,
+      "close": 31.41
+    }
+  ],
+  "alias": null,
+  "alias_sha256": null,
+  "raw_sha256": "37fed5c983f690e108fabd0841e3f66546e193d306439df2e78db06f4d641e77",
+  "factor_sha256": "5815f136f4b7befa9d28244f2164d29cd10a7e00087df42a275cde28c60a6341",
+  "first": "2017-01-03",
+  "last": "2026-09-09"
+}
