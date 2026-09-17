@@ -252,6 +252,108 @@ def cmd_paper_portfolio(args):
     print(text)
 
 
+def cmd_paper_ms_update(args):
+    """观察账户 8 号（M2 低波 top30 月调）每日更新。
+
+    性能：调仓日（每月首个交易日）全量刷新 717 只；非调仓日只刷新当前持仓。
+    """
+    from paper_multistock import (update_account, load_universe_codes, refresh_data,
+                                  load_panel, load_state, is_rebalance_day, NAME)
+
+    paper_dir = os.path.join(BASE_DIR, "paper_multistock")
+    cache_dir = os.path.join(paper_dir, "cache")
+    os.makedirs(cache_dir, exist_ok=True)
+
+    # 参考日历（510300 台账缓存决定交易日）
+    loader = DataLoader(cache_dir=os.path.join(BASE_DIR, "data_cache"))
+    ref = loader.load("510300", is_etf=True, start="2026-08-01")
+    cal = pd.DatetimeIndex(ref["date"])
+    latest = cal.max()
+    state = load_state(paper_dir)
+    holdings = list(state.get("shares", {}).keys())
+    rebalance_today = is_rebalance_day(cal, latest)
+
+    codes = load_universe_codes(BASE_DIR)
+    if rebalance_today:
+        # 开户日若非调仓日：空仓等待下一调仓日，无需全量刷新（不伪造历史持仓）
+        print(f"调仓日：全量刷新 {len(codes)} 只（尾部合并+重叠校验）...", flush=True)
+        t0 = datetime.now()
+        failed = refresh_data(codes, cache_dir, progress=True)
+        print(f"刷新完成，耗时 {datetime.now() - t0}，失败 {len(failed)} 只: "
+              f"{[c for c, _ in failed][:5]}")
+    else:
+        need = sorted(set(holdings) | {"510300"})
+        print(f"非调仓日：轻量刷新 {len(need)} 只（持仓+参考）", flush=True)
+        t0 = datetime.now()
+        failed = refresh_data(need, cache_dir, progress=False)
+        print(f"耗时 {datetime.now() - t0}")
+
+    data = load_panel(codes if rebalance_today else
+                      sorted(set(holdings) | {"510300"}), cache_dir)
+    print(f"数据截至 {latest:%Y-%m-%d}"
+          + ("（今日为调仓日）" if rebalance_today else ""))
+    for action in update_account(paper_dir, data):
+        print(action)
+
+
+def cmd_paper_ms_report(args):
+    from paper_multistock import (load_state, read_csv, _csv_path, load_panel,
+                                  load_universe_codes, NAME)
+
+    paper_dir = os.path.join(BASE_DIR, "paper_multistock")
+    state = load_state(paper_dir)
+    nav_df = read_csv(_csv_path(paper_dir, "nav"))
+    trades_df = read_csv(_csv_path(paper_dir, "trades"))
+
+    lines = [f"===== 观察账户 8 号（{NAME}，M2 低波 top30 月调）台账报表"
+             f"（{datetime.now():%Y-%m-%d %H:%M}）====="]
+    if nav_df.empty:
+        lines.append("台账为空，请先运行 paper-ms-update 开户")
+        print("\n".join(lines))
+        return
+    nav = nav_df.set_index("date")["nav"].sort_index()
+    cache_dir = os.path.join(paper_dir, "cache")
+    if state["shares"]:
+        panel = load_panel(list(state["shares"].keys()), cache_dir)
+        pos_lines = []
+        for c, n in sorted(state["shares"].items()):
+            p = panel[c].set_index("date")["close"].iloc[-1] if c in panel else None
+            pos_lines.append(f"{c} {n}股(@{p:.2f})" if p is not None and pd.notna(p)
+                             else f"{c} {n}股")
+        lines.append(f"当前持仓 {len(state['shares'])} 只：" + "、".join(pos_lines[:10])
+                     + (" ..." if len(pos_lines) > 10 else ""))
+    else:
+        lines.append(f"当前持仓：空仓；现金 {state['cash']:,.0f}")
+    pend = state["pending"]
+    if pend:
+        lines.append(f"待成交目标（{pend['signal_date']} 信号）：{len(pend['target'])} 只"
+                     f"（top30 等权）")
+    else:
+        lines.append("待成交目标：无（等待下一调仓日）")
+
+    from metrics import calc_metrics
+    trades = trades_df.to_dict("records") if not trades_df.empty else []
+    m = calc_metrics(nav, trades, initial=1_000_000)
+    sharpe_s = f"{m['夏普比率']:.2f}" if pd.notna(m["夏普比率"]) else "N/A"
+    lines.append(f"累计收益 {m['总收益率']:+.2%}  年化 {m['年化收益率']:+.2%}"
+                 f"  最大回撤 {m['最大回撤']:.2%}  夏普 {sharpe_s}  交易 {m['交易次数']} 笔")
+    if not trades_df.empty:
+        lines.append("\n最近 10 笔成交：")
+        for _, t in trades_df.tail(10).iterrows():
+            lines.append(f"  {t['date']:%Y-%m-%d} {t['code']} "
+                         f"{'买入' if t['side'] == 'buy' else '卖出'} {t['shares']}股"
+                         f" @ {t['price']:.2f}")
+    text = "\n".join(lines)
+    print(text)
+    reports_dir = os.path.join(BASE_DIR, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    txt_path = os.path.join(reports_dir,
+                            f"ms_paper_report_{datetime.now():%Y%m%d_%H%M%S}.txt")
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print(f"\n报表已保存：{txt_path}")
+
+
 def cmd_paper_obs_update(args):
     """观察账户 6/7 台账每日更新（哪个账户有新数据就处理哪个，互不阻塞）。"""
     from paper_obs import update_account
@@ -512,6 +614,12 @@ def main():
 
     p_po_r = sub.add_parser("paper-obs-report", help="观察账户 6/7 台账报表")
     p_po_r.set_defaults(func=cmd_paper_obs_report)
+
+    p_ms_u = sub.add_parser("paper-ms-update", help="观察账户 8 号（低波 top30 月调）每日更新")
+    p_ms_u.set_defaults(func=cmd_paper_ms_update)
+
+    p_ms_r = sub.add_parser("paper-ms-report", help="观察账户 8 号台账报表")
+    p_ms_r.set_defaults(func=cmd_paper_ms_report)
 
     p_mo = sub.add_parser("monitor", help="策略衰减监控体检表")
     p_mo.set_defaults(func=cmd_monitor)
