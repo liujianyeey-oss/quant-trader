@@ -11,3 +11,10 @@ reports/
 signals/
 
 # paper/ 台账是唯一实盘跟踪记录，必须纳入版本管理，不要忽略
+
+# 研究数据缓存（可再生成）
+macro_research/cache/
+research_r4/cache/
+research_r1/cache/
+research_hkshort/cache/
+paper_us/cache/
