@@ -1,0 +1,12 @@
+{
+  "positions": [
+    {
+      "code": "BTC",
+      "side": "long",
+      "weight": 1.0,
+      "entry_price": 76206.0,
+      "entry_date": "2026-09-17",
+      "note": "用户手动操作，非策略信号"
+    }
+  ]
+}
