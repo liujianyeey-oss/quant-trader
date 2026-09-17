@@ -244,6 +244,29 @@ def cmd_paper_btc_report(args):
         print(f"净值曲线已保存：{png}")
 
 
+def cmd_paper_portfolio(args):
+    """组合视图：跨台账只读聚合（不写任何台账文件）。"""
+    from portfolio_view import build_view
+
+    text, _ = build_view(BASE_DIR)
+    print(text)
+
+
+def cmd_monitor(args):
+    """策略衰减监控体检表。"""
+    from monitor import build_monitor
+
+    text, _ = build_monitor(BASE_DIR)
+    print(text)
+    reports_dir = os.path.join(BASE_DIR, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    txt_path = os.path.join(reports_dir,
+                            f"monitor_{datetime.now():%Y%m%d_%H%M%S}.txt")
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print(f"\n体检表已保存：{txt_path}")
+
+
 def cmd_paper_us_report(args):
     from us_equities.paper_us import TRACKED, build_report, load_universe
 
@@ -421,6 +444,12 @@ def main():
 
     p_pb_r = sub.add_parser("paper-btc-report", help="BTC×F1 台账分析报表")
     p_pb_r.set_defaults(func=cmd_paper_btc_report)
+
+    p_pf = sub.add_parser("paper-portfolio", help="组合视图：跨台账 P2 风险平价合成（只读）")
+    p_pf.set_defaults(func=cmd_paper_portfolio)
+
+    p_mo = sub.add_parser("monitor", help="策略衰减监控体检表")
+    p_mo.set_defaults(func=cmd_monitor)
 
     args = parser.parse_args()
     args.func(args)

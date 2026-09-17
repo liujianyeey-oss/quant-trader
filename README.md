@@ -110,7 +110,20 @@ cron 配置（`paper_us/daily_update_us.sh` 已带绝对路径）：
 47 8 * * 2-6 /Users/liujianye10/quant-trader/paper_us/daily_update_us.sh
 ```
 
-### 7. 配置（config.yaml）
+### 7. BTC×F1 台账（paper_btc/）、组合视图与监控
+
+```bash
+python main.py paper-btc-update   # BTC 台账每日更新（币安 UTC 日线收盘后，北京 08:17）
+python main.py paper-btc-report   # BTC 台账报表
+python main.py paper-portfolio    # 组合视图：跨台账 P2 风险平价合成（只读，不写台账）
+python main.py monitor            # 策略衰减监控体检表（reports/monitor_*）
+```
+
+- BTC 台账规则：唐奇安 20/10 + F1 量能确认（R4 判定"挂模拟观察"），$50,000，taker 10bps+滑点 10bps；cron `17 8 * * *`（每天，365 日历），脚本 `paper_btc/daily_update_btc.sh`
+- 组合视图口径：60 日波动倒数权重、clip[10%,40%]、月末再平衡；不足 60 日暂用等权并标注；各账户本币归一化合成、忽略汇率（R7a 声明）
+- **每月复盘建议**：每月跑一次 `monitor` + `paper-report` + `paper-portfolio`，对照"滚动 252 日夏普<0 黄 / <-0.5 红 / 台账理论偏离>2% 黄"检查策略衰减
+
+### 8. 配置（config.yaml）
 
 - `universe.etfs` / `universe.stocks`：标的池（ETF 走 `fund_etf_hist_em`，个股走 `stock_zh_a_hist`，均为前复权日线）
 - `universe.defensive`：防守资产（默认 518880 黄金ETF，经网格调参选定）
