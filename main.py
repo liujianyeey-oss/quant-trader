@@ -428,6 +428,13 @@ def cmd_monitor(args):
     print(f"\n体检表已保存：{txt_path}")
 
 
+def cmd_winrate(args):
+    """条件胜率评估：基于今日状态指纹的历史同形态统计。"""
+    from winrate import eval_winrate, fmt_report
+
+    print(fmt_report(eval_winrate(args.asset, args.asof)))
+
+
 def cmd_paper_us_report(args):
     from us_equities.paper_us import TRACKED, build_report, load_universe
 
@@ -623,6 +630,11 @@ def main():
 
     p_mo = sub.add_parser("monitor", help="策略衰减监控体检表")
     p_mo.set_defaults(func=cmd_monitor)
+
+    p_wr = sub.add_parser("winrate", help="条件胜率评估（同形态历史胜率：BTC/QQQ/SPY/本地代码）")
+    p_wr.add_argument("--asset", default="BTC")
+    p_wr.add_argument("--asof", default=None, help="评估截止日 YYYY-MM-DD，默认最新")
+    p_wr.set_defaults(func=cmd_winrate)
 
     args = parser.parse_args()
     args.func(args)
