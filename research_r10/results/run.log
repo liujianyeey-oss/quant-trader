@@ -1,0 +1,36 @@
+加载 17 只...
+数据截至 2026-09-16
+
+== ① 市场宽度 ==
+冗余自查: {'信号日数': 468, '宽度触发日数': 150, '趋势防守日数': 180, '重合日数': 125, '宽度触发中趋势也防守占比': 0.8333333333333334, '趋势防守中宽度也触发占比': 0.6944444444444444}
+完成 宽度30%(预声明档)
+完成 宽度20%(敏感性)
+完成 宽度40%(敏感性)
+
+== ② 印度纳入复核 ==
+/Users/liujianye10/quant-trader/research_r10/runner.py:134: Pandas4Warning: Sorting by default when concatenating all DatetimeIndex is deprecated.  In the future, pandas will respect the default of `sort=False`. Specify `sort=True` or `sort=False` to silence this message. If you see this warnings when not directly calling concat, report a bug to pandas.
+  rr = pd.concat([ind.pct_change().rename("ind"), b300.pct_change().rename("b300")],
+164824 vs 510300 相关系数: 0.24，近20日日均成交额(近似): 16 万元
+
+===== R10 结果 =====
+part     variant segment calmar_median mdd_worst cagr_median sharpe_median calmar_min calmar_max
+ ①宽度 基准_momentum   train          0.94    -22.9%       18.7%          0.91       0.56       1.10
+ ①宽度 基准_momentum   valid          0.58    -35.4%       18.1%          0.68       0.28       0.91
+ ①宽度 基准_momentum    full          0.65    -44.2%       20.0%          0.81       0.26       0.69
+ ①宽度 宽度30%(预声明档)   train          0.68    -23.2%       15.1%          0.78       0.61       0.90
+ ①宽度 宽度30%(预声明档)   valid          0.41    -35.4%       11.3%          0.51       0.30       0.94
+ ①宽度 宽度30%(预声明档)    full          0.45    -38.2%       13.5%          0.62       0.33       0.72
+ ①宽度  宽度20%(敏感性)   train          0.73    -24.3%       15.7%          0.80       0.60       1.23
+ ①宽度  宽度20%(敏感性)   valid          0.62    -35.4%       18.3%          0.65       0.18       0.82
+ ①宽度  宽度20%(敏感性)    full          0.56    -44.2%       16.6%          0.71       0.26       0.72
+ ①宽度  宽度40%(敏感性)   train          0.86    -25.0%       19.0%          0.96       0.65       1.17
+ ①宽度  宽度40%(敏感性)   valid          0.34    -34.4%       10.1%          0.48      -0.24       0.72
+ ①宽度  宽度40%(敏感性)    full          0.42    -34.4%       12.9%          0.64       0.29       0.76
+ ②印度   V1复算(无印度)   train          0.90    -26.0%       19.1%          0.89       0.59       1.42
+ ②印度   V1复算(无印度)   valid          0.70    -46.6%       23.1%          0.73       0.18       1.13
+ ②印度   V1复算(无印度)    full          0.62    -46.6%       20.4%          0.78       0.28       0.90
+ ②印度 V1+印度164824   train          0.82    -27.3%       20.5%          0.96       0.56       0.89
+ ②印度 V1+印度164824   valid          0.64    -40.2%       20.6%          0.69       0.26       0.73
+ ②印度 V1+印度164824    full          0.64    -40.2%       21.1%          0.81       0.33       0.75
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r10/results
