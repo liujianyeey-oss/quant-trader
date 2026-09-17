@@ -1,0 +1,65 @@
+加载数据...
+拉取 159915 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159915 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159920 失败(第8次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+东财源拉取 159920 数据失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，切换腾讯备用源拉取 159920
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:00<00:02,  3.67it/s] 20%|██        | 2/10 [00:00<00:02,  3.91it/s] 30%|███       | 3/10 [00:00<00:01,  4.03it/s] 40%|████      | 4/10 [00:01<00:01,  4.02it/s] 50%|█████     | 5/10 [00:01<00:01,  4.07it/s] 60%|██████    | 6/10 [00:01<00:00,  4.12it/s] 70%|███████   | 7/10 [00:01<00:00,  4.06it/s] 80%|████████  | 8/10 [00:01<00:00,  4.01it/s] 90%|█████████ | 9/10 [00:02<00:00,  4.06it/s]100%|██████████| 10/10 [00:02<00:00,  4.10it/s]                                               拉取 159980 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159980 失败(第8次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+东财源拉取 159980 数据失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，切换腾讯备用源拉取 159980
+  0%|          | 0/8 [00:00<?, ?it/s] 12%|█▎        | 1/8 [00:00<00:01,  4.94it/s] 25%|██▌       | 2/8 [00:00<00:01,  4.38it/s] 38%|███▊      | 3/8 [00:00<00:01,  4.13it/s] 50%|█████     | 4/8 [00:01<00:01,  3.75it/s] 62%|██████▎   | 5/8 [00:01<00:00,  3.62it/s] 75%|███████▌  | 6/8 [00:01<00:00,  3.61it/s] 88%|████████▊ | 7/8 [00:01<00:00,  3.71it/s]100%|██████████| 8/8 [00:02<00:00,  3.74it/s]                                             拉取 510300 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510300 失败(第8次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+东财源拉取 510300 数据失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，切换腾讯备用源拉取 510300
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:00<00:02,  4.03it/s] 20%|██        | 2/10 [00:00<00:02,  3.90it/s] 30%|███       | 3/10 [00:00<00:01,  3.93it/s] 40%|████      | 4/10 [00:01<00:01,  3.98it/s] 50%|█████     | 5/10 [00:01<00:01,  3.92it/s] 60%|██████    | 6/10 [00:01<00:01,  3.88it/s] 70%|███████   | 7/10 [00:01<00:00,  4.01it/s] 80%|████████  | 8/10 [00:02<00:00,  4.01it/s] 90%|█████████ | 9/10 [00:02<00:00,  3.98it/s]100%|██████████| 10/10 [00:02<00:00,  3.93it/s]                                               拉取 510500 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510500 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510500 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510500 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510500 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510500 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510500 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+数据截至 2026-09-16
+融资余额数据: OK
+  覆盖 2017-01-03 ~ 2026-09-16
+完成 V0_基线池
+完成 V1_扩跨境
+完成 V2_对照池
+完成 V1+量过滤
+完成 V1+融资5%
+完成 V1+融资10%
+
+相位扰动...
+
+===== 变体总表（训练 2019-2023 / 验证 2024+ / 全期） =====
+ variant train_年化 train_回撤 train_卡玛 train_夏普 valid_年化 valid_回撤 valid_卡玛 full_年化 full_回撤 full_卡玛 full_夏普 full_换手  full_交易
+  V0_基线池    12.9%   -22.9%     0.56     0.68     9.2%   -32.5%     0.28   11.6%  -44.2%    0.26    0.57     33x      129
+  V1_扩跨境    15.4%   -26.0%     0.59     0.75     8.6%   -46.6%     0.18   12.9%  -46.6%    0.28    0.58     41x      159
+  V2_对照池    15.1%   -28.0%     0.54     0.71    18.7%   -30.0%     0.62   16.3%  -30.0%    0.54    0.67     43x      173
+  V1+量过滤     8.9%   -26.6%     0.33     0.49     7.1%   -48.6%     0.15    8.2%  -48.6%    0.17    0.43     50x      198
+ V1+融资5%    24.9%   -26.0%     0.96     1.17     2.1%   -38.9%     0.05   16.2%  -38.9%    0.42    0.72     40x      152
+V1+融资10%    18.3%   -26.0%     0.71     0.89     5.5%   -43.1%     0.13   13.5%  -43.1%    0.31    0.62     39x      153
+
+===== 相位扰动（全期年化范围） =====
+variant cagr_min cagr_median cagr_max 极差pp mdd_worst mdd_best calmar_median
+ V0_基线池    11.6%       20.0%    20.1%  8.6    -44.2%   -28.9%          0.65
+ V1_扩跨境    12.9%       20.4%    28.8% 16.0    -46.6%   -28.9%          0.62
+ V2_对照池    13.0%       19.2%    30.9% 17.9    -42.1%   -27.9%          0.54
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r1/results
