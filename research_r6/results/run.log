@@ -1,0 +1,22 @@
+行情截至 2026-09-16
+iVIX: 2015-02-09~2026-09-16 | IF 基差: 2019-01-02~2026-09-16
+G1（沪深300 PE 日频≥5年）：免费源不可得 → 不可测；G13 随之不成立
+完成 基准(乘数=1)
+完成 G3_iVIX
+完成 G4_IF基差
+
+===== 治理层效果（5 相位中位数口径） =====
+ variant segment cagr_median mdd_worst sharpe_median calmar_median calmar_min calmar_max
+基准(乘数=1)   train       18.7%    -22.9%          0.91          0.94       0.56       1.10
+基准(乘数=1)   valid       18.1%    -35.4%          0.68          0.58       0.28       0.91
+基准(乘数=1)    full       20.0%    -44.2%          0.81          0.65       0.26       0.69
+ G3_iVIX   train       19.7%    -26.3%          0.97          0.86       0.53       1.30
+ G3_iVIX   valid       24.4%    -39.9%          0.78          0.74       0.23       1.02
+ G3_iVIX    full       22.1%    -52.7%          0.85          0.57       0.23       0.73
+ G4_IF基差   train       16.7%    -26.5%          0.81          0.73       0.42       0.79
+ G4_IF基差   valid       17.4%    -37.6%          0.65          0.49       0.38       0.90
+ G4_IF基差    full       18.0%    -44.8%          0.74          0.51       0.26       0.64
+
+乘数行为： [{'variant': 'G3_iVIX', 'mean': np.float64(1.0082650862107183), 'p10': np.float64(0.6788821758508016), 'p90': np.float64(1.3153541575074947), 'share_gt1': np.float64(0.45631891433418154), 'share_lt1': np.float64(0.43341815097540287)}, {'variant': 'G4_IF基差', 'mean': np.float64(1.037637828668363), 'p10': np.float64(0.75), 'p90': np.float64(1.25), 'share_gt1': np.float64(0.3337574215436811), 'share_lt1': np.float64(0.183206106870229)}]
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r6/results

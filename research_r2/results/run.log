@@ -1,0 +1,106 @@
+数据截至 2026-09-16
+510300 MR1_rsi2<10 done
+510300 MR1_rsi2<5 done
+510300 MR2_boll<-2 done
+510300 MR3_rsi2<10+地量60 done
+510500 MR1_rsi2<10 done
+510500 MR1_rsi2<5 done
+510500 MR2_boll<-2 done
+510500 MR3_rsi2<10+地量60 done
+159915 MR1_rsi2<10 done
+159915 MR1_rsi2<5 done
+159915 MR2_boll<-2 done
+159915 MR3_rsi2<10+地量60 done
+
+T+1 税对照...
+/Users/liujianye10/quant-trader/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py:3036: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/liujianye10/quant-trader/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py:3037: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/Users/liujianye10/quant-trader/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py:3036: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/liujianye10/quant-trader/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py:3037: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/Users/liujianye10/quant-trader/research_r2/runner.py:210: Pandas4Warning: Sorting by default when concatenating all DatetimeIndex is deprecated.  In the future, pandas will respect the default of `sort=False`. Specify `sort=True` or `sort=False` to silence this message. If you see this warnings when not directly calling concat, report a bug to pandas.
+  j = pd.concat([r.rename("mr"), mom_ret.rename("mom")], axis=1).dropna()
+/Users/liujianye10/quant-trader/research_r2/runner.py:210: Pandas4Warning: Sorting by default when concatenating all DatetimeIndex is deprecated.  In the future, pandas will respect the default of `sort=False`. Specify `sort=True` or `sort=False` to silence this message. If you see this warnings when not directly calling concat, report a bug to pandas.
+  j = pd.concat([r.rename("mr"), mom_ret.rename("mom")], axis=1).dropna()
+/Users/liujianye10/quant-trader/research_r2/runner.py:210: Pandas4Warning: Sorting by default when concatenating all DatetimeIndex is deprecated.  In the future, pandas will respect the default of `sort=False`. Specify `sort=True` or `sort=False` to silence this message. If you see this warnings when not directly calling concat, report a bug to pandas.
+  j = pd.concat([r.rename("mr"), mom_ret.rename("mom")], axis=1).dropna()
+/Users/liujianye10/quant-trader/research_r2/runner.py:210: Pandas4Warning: Sorting by default when concatenating all DatetimeIndex is deprecated.  In the future, pandas will respect the default of `sort=False`. Specify `sort=True` or `sort=False` to silence this message. If you see this warnings when not directly calling concat, report a bug to pandas.
+  j = pd.concat([r.rename("mr"), mom_ret.rename("mom")], axis=1).dropna()
+/Users/liujianye10/quant-trader/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py:3036: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/liujianye10/quant-trader/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py:3037: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/Users/liujianye10/quant-trader/research_r2/runner.py:210: Pandas4Warning: Sorting by default when concatenating all DatetimeIndex is deprecated.  In the future, pandas will respect the default of `sort=False`. Specify `sort=True` or `sort=False` to silence this message. If you see this warnings when not directly calling concat, report a bug to pandas.
+  j = pd.concat([r.rename("mr"), mom_ret.rename("mom")], axis=1).dropna()
+symbol          variant real_cagr ideal_cagr t1_tax_pp real_mdd ideal_mdd
+510300      MR1_rsi2<10      3.8%       2.9%      -0.8   -10.7%    -14.5%
+510300       MR1_rsi2<5      1.2%       1.2%       0.1    -8.8%     -9.4%
+510300      MR2_boll<-2      3.7%       2.8%      -0.9   -10.9%    -10.8%
+510300 MR3_rsi2<10+地量60      0.0%       0.0%       0.0     0.0%      0.0%
+510500      MR1_rsi2<10     -0.6%       1.1%       1.7   -18.8%    -19.6%
+510500       MR1_rsi2<5     -1.8%      -0.2%       1.6   -22.7%    -20.4%
+510500      MR2_boll<-2     -0.9%      -0.5%       0.4   -14.7%    -14.7%
+510500 MR3_rsi2<10+地量60      0.0%       0.0%       0.0     0.0%      0.0%
+159915      MR1_rsi2<10      4.7%       7.2%       2.5   -17.9%    -16.1%
+159915       MR1_rsi2<5      1.5%       3.4%       2.0   -16.6%    -16.4%
+159915      MR2_boll<-2     -2.0%      -1.7%       0.3   -28.9%    -28.4%
+159915 MR3_rsi2<10+地量60      0.0%       0.0%       0.0     0.0%      0.0%
+
+===== MR 矩阵（训练段） =====
+symbol          variant  trades flat_share  cagr    mdd sharpe calmar turnover
+510300      MR1_rsi2<10      37        51%  4.3% -10.7%   0.54   0.40    14.5x
+510300       MR1_rsi2<5      16        53%  0.4%  -8.8%   0.10   0.05     6.4x
+510300      MR2_boll<-2       7        56%  3.6% -10.9%   0.55   0.33     2.7x
+510300 MR3_rsi2<10+地量60       0         0%  0.0%   0.0%    nan    nan     0.0x
+510300             买入持有       0         0%  5.5% -42.7%   0.39   0.13     0.1x
+510500      MR1_rsi2<10      39        51% -0.0% -18.1%   0.05  -0.00    15.3x
+510500       MR1_rsi2<5      19        50% -1.7% -13.3%  -0.23  -0.13     7.7x
+510500      MR2_boll<-2      10        55% -0.8% -14.7%  -0.06  -0.06     4.0x
+510500 MR3_rsi2<10+地量60       0         0%  0.0%   0.0%    nan    nan     0.0x
+510500             买入持有       0         0%  7.9% -32.8%   0.49   0.24     0.1x
+159915      MR1_rsi2<10      30        52%  5.3% -10.3%   0.59   0.51    11.6x
+159915       MR1_rsi2<5      16        50%  3.0%  -6.9%   0.45   0.43     6.3x
+159915      MR2_boll<-2       7        50% -3.4% -20.8%  -0.28  -0.17     2.9x
+159915 MR3_rsi2<10+地量60       0         0%  0.0%   0.0%    nan    nan     0.0x
+159915             买入持有       0         0%  9.0% -49.2%   0.48   0.18     0.1x
+
+===== 验证段 =====
+symbol          variant  trades  cagr    mdd calmar
+510300      MR1_rsi2<10      23  2.9%  -8.2%   0.35
+510300       MR1_rsi2<5       9  2.5%  -3.8%   0.67
+510300      MR2_boll<-2       7  3.7%  -5.1%   0.72
+510300 MR3_rsi2<10+地量60       0  0.0%   0.0%    nan
+510300             买入持有       0 13.5% -17.1%   0.79
+510500      MR1_rsi2<10      19 -1.8% -12.4%  -0.14
+510500       MR1_rsi2<5      10 -1.8% -13.4%  -0.14
+510500      MR2_boll<-2       5 -1.0% -11.2%  -0.09
+510500 MR3_rsi2<10+地量60       0  0.0%   0.0%    nan
+510500             买入持有       0 16.1% -19.7%   0.82
+159915      MR1_rsi2<10      16  3.6% -17.9%   0.20
+159915       MR1_rsi2<5       8 -1.2% -16.5%  -0.07
+159915      MR2_boll<-2       7  0.7% -15.4%   0.05
+159915 MR3_rsi2<10+地量60       0  0.0%   0.0%    nan
+159915             买入持有       0 24.4% -33.7%   0.72
+
+===== 与 momentum 日收益相关 =====
+symbol          variant corr_vs_momentum
+510300      MR1_rsi2<10             0.28
+510300       MR1_rsi2<5             0.15
+510300      MR2_boll<-2             0.23
+510300 MR3_rsi2<10+地量60              nan
+510300             买入持有             0.60
+510500      MR1_rsi2<10             0.24
+510500       MR1_rsi2<5             0.19
+510500      MR2_boll<-2             0.22
+510500 MR3_rsi2<10+地量60              nan
+510500             买入持有             0.64
+159915      MR1_rsi2<10             0.28
+159915       MR1_rsi2<5             0.19
+159915      MR2_boll<-2             0.20
+159915 MR3_rsi2<10+地量60              nan
+159915             买入持有             0.65
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r2/results

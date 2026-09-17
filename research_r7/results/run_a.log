@@ -1,0 +1,51 @@
+生成四袖珍净值...
+袖珍完成
+组合 P1_等权月调 完成
+组合 P2_风险平价 完成
+组合 P3_P1+波动目标12% 完成
+
+===== 袖珍与组合（full 全期） =====
+          item  cagr    mdd sharpe calmar
+ S1_A股momentum 11.5% -44.2%   0.57   0.26
+S2_A股staggered 14.4% -10.5%   1.14   1.37
+ S3_美股donchian 13.3% -16.0%   1.07   0.83
+     S4_BTC×F1 49.1% -39.8%   1.23   1.23
+       P1_等权月调 23.8% -17.3%   1.57   1.38
+       P2_风险平价 20.1% -12.9%   1.63   1.56
+ P3_P1+波动目标12% 20.3% -16.0%   1.60   1.26
+   基准_510300持有  8.6% -44.7%   0.51   0.19
+
+===== 分段卡玛 =====
+segment         full train valid
+item                            
+P1_等权月调         1.38  1.68  1.32
+P2_风险平价         1.56  1.72  1.74
+P3_P1+波动目标12%   1.26  1.50  1.27
+S1_A股momentum   0.26  0.56  0.28
+S2_A股staggered  1.37  1.23  1.71
+S3_美股donchian   0.83  0.94  0.96
+S4_BTC×F1       1.23  1.97  0.25
+基准_510300持有     0.19  0.14  0.83
+
+===== 相关矩阵 =====
+                S1_A股momentum  S2_A股staggered  S3_美股donchian  S4_BTC×F1
+S1_A股momentum            1.00            0.85           0.07       0.00
+S2_A股staggered           0.85            1.00           0.06      -0.02
+S3_美股donchian            0.07            0.06           1.00       0.08
+S4_BTC×F1                0.00           -0.02           0.08       1.00
+
+===== P1 最大回撤归因（2021-09-06 → 2022-12-23） =====
+               sleeve_return contrib_to_dd
+S1_A股momentum         -12.9%         -3.2%
+S2_A股staggered         -3.4%         -0.9%
+S3_美股donchian         -13.2%         -3.3%
+S4_BTC×F1             -37.3%         -9.3%
+
+===== 2022 年收益 =====
+P1                -10.8%
+S1_A股momentum      -6.1%
+S2_A股staggered      0.2%
+S3_美股donchian     -10.1%
+S4_BTC×F1         -26.9%
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r7/results

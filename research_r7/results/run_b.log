@@ -1,0 +1,65 @@
+加载 14 只...
+拉取 159928 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159928 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159928 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159928 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159928 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 159928 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512010 失败(第8次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+东财源拉取 512010 数据失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，切换腾讯备用源拉取 512010
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:00<00:02,  3.57it/s] 20%|██        | 2/10 [00:00<00:02,  3.65it/s] 30%|███       | 3/10 [00:00<00:01,  3.64it/s] 40%|████      | 4/10 [00:01<00:01,  3.75it/s] 50%|█████     | 5/10 [00:01<00:01,  3.75it/s] 60%|██████    | 6/10 [00:01<00:01,  3.70it/s] 70%|███████   | 7/10 [00:01<00:00,  3.75it/s] 80%|████████  | 8/10 [00:02<00:00,  3.77it/s] 90%|█████████ | 9/10 [00:02<00:00,  3.79it/s]100%|██████████| 10/10 [00:02<00:00,  3.74it/s]                                               拉取 512660 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512690 失败(第8次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+东财源拉取 512690 数据失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，切换腾讯备用源拉取 512690
+  0%|          | 0/8 [00:00<?, ?it/s] 12%|█▎        | 1/8 [00:00<00:01,  4.28it/s] 25%|██▌       | 2/8 [00:00<00:01,  3.84it/s] 38%|███▊      | 3/8 [00:00<00:01,  3.73it/s] 50%|█████     | 4/8 [00:01<00:01,  3.43it/s] 62%|██████▎   | 5/8 [00:01<00:00,  3.32it/s] 75%|███████▌  | 6/8 [00:01<00:00,  3.37it/s] 88%|████████▊ | 7/8 [00:02<00:00,  3.35it/s]100%|██████████| 8/8 [00:02<00:00,  3.34it/s]                                             拉取 512800 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512800 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512800 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512800 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512800 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512800 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 512800 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 515030 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 515790 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+数据截至 2026-09-16
+  512880 券商: 自 2017-01-03 起
+  512480 半导体: 自 2019-06-12 起
+  515030 新能源车: 自 2020-03-04 起
+  512010 医药: 自 2017-01-03 起
+  512660 军工: 自 2017-01-03 起
+  512800 银行: 自 2017-08-03 起
+  159928 消费: 自 2017-01-03 起
+  512690 酒: 自 2019-05-06 起
+  515790 光伏: 自 2020-12-18 起
+V0 宽基...
+行业池 momentum...
+行业池 staggered...
+
+训练卡玛中位：行业池 0.15 vs V0 0.94
+行业池未胜出 → 合并池不加测（预声明）
+
+===== R7b 行业轮动（相位口径） =====
+         variant segment calmar_median mdd_worst cagr_median sharpe_median calmar_min calmar_max cagr_spread_pp
+V0_宽基池(momentum)   train          0.94    -22.9%       18.7%          0.91       0.56       1.10            8.3
+V0_宽基池(momentum)   valid          0.58    -35.4%       18.1%          0.68       0.28       0.91           17.1
+V0_宽基池(momentum)    full          0.65    -44.2%       20.0%          0.81       0.26       0.69            8.6
+   行业池(momentum)   train          0.15    -65.4%        7.4%          0.39       0.01       0.53           22.3
+   行业池(momentum)   valid          0.13    -34.9%        4.3%          0.30      -0.18       0.59           24.8
+   行业池(momentum)    full          0.12    -72.2%        7.1%          0.38       0.09       0.22            7.6
+  行业池(staggered)   train          0.13    -24.7%        3.2%          0.33          -          -              -
+  行业池(staggered)   valid          0.58    -15.3%        8.9%          0.69          -          -              -
+  行业池(staggered)    full          0.17    -30.0%        5.2%          0.47          -          -              -
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r7/results

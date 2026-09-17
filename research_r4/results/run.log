@@ -1,0 +1,48 @@
+加载 BTC/ETH klines...
+BTC 2017-08-17~2026-09-16, ETH 2017-08-17~2026-09-16
+BTC 基准/F1 done
+fundingRate 2020-01-01~2026-08-31 
+BTC F3 done
+ETH done
+
+红利低波...
+拉取 510880 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510880 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510880 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510880 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510880 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 510880 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+===== 加密过滤器矩阵（train/valid 卡玛） =====
+segment                  full report train valid
+asset variant                                   
+BTC   F1_量能确认            1.18  -0.24  1.92  3.19
+      F3_费率拥挤过滤          0.72  -0.08  1.07  1.85
+      基准donchian         0.78  -0.08  1.11  1.85
+      基准donchian(F3同窗口)  0.72  -0.08  1.07  1.85
+ETH   F1_量能确认            0.78  -0.31  1.46  1.81
+      F3_费率拥挤过滤          0.70  -0.40  3.20  0.17
+      基准donchian         0.52  -0.40  1.85  0.17
+      基准donchian(F3同窗口)  0.70  -0.40  3.20  0.17
+
+===== 加密：年化/回撤（train） =====
+asset           variant  trades   cagr    mdd calmar
+  BTC        基准donchian      17  60.5% -54.5%   1.11
+  BTC           F1_量能确认      11  71.9% -37.4%   1.92
+  BTC         F3_费率拥挤过滤      13  58.1% -54.5%   1.07
+  BTC 基准donchian(F3同窗口)      13  58.1% -54.5%   1.07
+  ETH        基准donchian      19  85.9% -46.4%   1.85
+  ETH           F1_量能确认      15  56.6% -38.9%   1.46
+  ETH         F3_费率拥挤过滤      13 148.4% -46.4%   3.20
+  ETH 基准donchian(F3同窗口)      13 148.4% -46.4%   3.20
+
+===== 红利低波 =====
+                 cagr               calmar                  mdd              
+segment          full  train  valid   full  train  valid   full  train  valid
+variant                                                                      
+D0_买入持有          0.10   0.10   0.15   0.37   0.37   0.99  -0.28  -0.28  -0.15
+D1_MA60过滤       -0.01  -0.04   0.07  -0.04  -0.10   0.49  -0.38  -0.38  -0.14
+D2a_510880进攻击池   0.10   0.12  -0.12   0.17   0.33  -0.28  -0.58  -0.37  -0.44
+D2b_防守换510880    0.06   0.13  -0.09   0.12   0.37  -0.27  -0.54  -0.34  -0.34
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r4/results

@@ -199,6 +199,51 @@ def cmd_paper_us_update(args):
             print(action)
 
 
+def cmd_paper_btc_update(args):
+    """BTC×F1 台账每日更新（币安日线 UTC 收盘后，北京 08:17 cron）。"""
+    from paper_btc import update_account, load_btc_with_today_open
+
+    paper_dir = os.path.join(BASE_DIR, "paper_btc")
+    os.makedirs(paper_dir, exist_ok=True)
+    try:
+        data, today_open = load_btc_with_today_open()
+    except Exception as e:
+        print(f"错误：BTC 数据不可用（{e}）", file=sys.stderr)
+        sys.exit(1)
+    print(f"BTC 已完成 K 线截至 {data['date'].max():%Y-%m-%d}（UTC）；"
+          f"本根 K 线 {today_open[0]:%Y-%m-%d} 开盘 ${today_open[1]:,.0f}")
+    for action in update_account(data, today_open, paper_dir):
+        print(action)
+
+
+def cmd_paper_btc_report(args):
+    from paper_btc import build_report, load_btc_with_today_open
+    from paper_btc import TRACKED_NAME
+
+    paper_dir = os.path.join(BASE_DIR, "paper_btc")
+    try:
+        data, _ = load_btc_with_today_open()
+    except Exception as e:
+        print(f"错误：BTC 数据不可用（{e}）", file=sys.stderr)
+        sys.exit(1)
+    text, nav_curves, ideal = build_report(data, paper_dir)
+    print(text)
+
+    reports_dir = os.path.join(BASE_DIR, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    txt_path = os.path.join(reports_dir, f"btc_paper_report_{ts}.txt")
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print(f"\n报表已保存：{txt_path}")
+    if nav_curves:
+        from paper import plot_paper_nav
+        d = data.set_index("date")
+        png = os.path.join(reports_dir, f"btc_paper_nav_{ts}.png")
+        plot_paper_nav(nav_curves, {TRACKED_NAME: ideal}, d["close"], png)
+        print(f"净值曲线已保存：{png}")
+
+
 def cmd_paper_us_report(args):
     from us_equities.paper_us import TRACKED, build_report, load_universe
 
@@ -370,6 +415,12 @@ def main():
 
     p_pus_r = sub.add_parser("paper-us-report", help="美股 donchian 台账分析报表")
     p_pus_r.set_defaults(func=cmd_paper_us_report)
+
+    p_pb_u = sub.add_parser("paper-btc-update", help="BTC×F1 台账每日更新（币安日线收盘后）")
+    p_pb_u.set_defaults(func=cmd_paper_btc_update)
+
+    p_pb_r = sub.add_parser("paper-btc-report", help="BTC×F1 台账分析报表")
+    p_pb_r.set_defaults(func=cmd_paper_btc_report)
 
     args = parser.parse_args()
     args.func(args)
