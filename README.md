@@ -123,7 +123,18 @@ python main.py monitor            # 策略衰减监控体检表（reports/monito
 - 组合视图口径：60 日波动倒数权重、clip[10%,40%]、月末再平衡；不足 60 日暂用等权并标注；各账户本币归一化合成、忽略汇率（R7a 声明）
 - **每月复盘建议**：每月跑一次 `monitor` + `paper-report` + `paper-portfolio`，对照"滚动 252 日夏普<0 黄 / <-0.5 红 / 台账理论偏离>2% 黄"检查策略衰减
 
-### 8. 配置（config.yaml）
+### 8. 条件胜率评估（winrate）
+
+```bash
+python main.py winrate --asset BTC        # BTC（默认）
+python main.py winrate --asset QQQ        # 美股 QQQ/SPY
+python main.py winrate --asset 510300     # A股本地缓存代码
+python main.py winrate --asset BTC --asof 2026-09-10   # 指定评估日
+```
+
+基于"今日状态指纹"（MA200、20/60 日动量、距 20 日高点、距 10 日低点、量比）在历史同形态日上统计 T+5/10/20/60 胜率分布，双档呈现（严格/放宽）并标注独立事件数与薄样本警告。**历史频率陈述，非投资建议。**
+
+### 9. 配置（config.yaml）
 
 - `universe.etfs` / `universe.stocks`：标的池（ETF 走 `fund_etf_hist_em`，个股走 `stock_zh_a_hist`，均为前复权日线）
 - `universe.defensive`：防守资产（默认 518880 黄金ETF，经网格调参选定）
