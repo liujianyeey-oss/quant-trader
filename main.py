@@ -252,6 +252,65 @@ def cmd_paper_portfolio(args):
     print(text)
 
 
+def cmd_paper_obs_update(args):
+    """观察账户 6/7 台账每日更新（哪个账户有新数据就处理哪个，互不阻塞）。"""
+    from paper_obs import update_account
+
+    paper_dir = os.path.join(BASE_DIR, "paper_obs")
+    os.makedirs(paper_dir, exist_ok=True)
+    os.makedirs(os.path.join(paper_dir, "cache"), exist_ok=True)
+
+    # 账户 6：QQQ×H2（美股时段，新浪日线每日刷新）
+    try:
+        from us_equities.paper_us import load_symbol
+        from macro_research.data_layer import load_us10y
+        q = load_symbol("QQQ", os.path.join(paper_dir, "cache"))
+        us10y, note = load_us10y()
+        if note:
+            print(f"警告：美债10Y {note}")
+        for a in update_account({"QQQ": q}, "qqq_h2", paper_dir, extra=us10y):
+            print(a)
+    except Exception as e:  # noqa: BLE001
+        print(f"警告：qqq_h2 更新失败（{type(e).__name__}: {e}）", file=sys.stderr)
+
+    # 账户 7：159915×RSI2（A股时段，双源）
+    try:
+        loader = DataLoader(cache_dir=os.path.join(BASE_DIR, "data_cache"))
+        h = loader.load("159915", is_etf=True, start="2017-01-01")
+        for a in update_account({"159915": h}, "hs_rsi2", paper_dir):
+            print(a)
+    except Exception as e:  # noqa: BLE001
+        print(f"警告：hs_rsi2 更新失败（{type(e).__name__}: {e}）", file=sys.stderr)
+
+
+def cmd_paper_obs_report(args):
+    from paper_obs import build_report
+
+    paper_dir = os.path.join(BASE_DIR, "paper_obs")
+    os.makedirs(os.path.join(paper_dir, "cache"), exist_ok=True)
+    data_map = {}
+    from us_equities.paper_us import load_symbol
+    loader = DataLoader(cache_dir=os.path.join(BASE_DIR, "data_cache"))
+    try:
+        data_map["QQQ"] = load_symbol("QQQ", os.path.join(paper_dir, "cache"))
+    except Exception as e:  # noqa: BLE001
+        print(f"警告：QQQ 数据不可用（{e}）", file=sys.stderr)
+    try:
+        data_map["159915"] = loader.load("159915", is_etf=True, start="2017-01-01")
+    except Exception as e:  # noqa: BLE001
+        print(f"警告：159915 数据不可用（{e}）", file=sys.stderr)
+
+    text = build_report(data_map, paper_dir)
+    print(text)
+    reports_dir = os.path.join(BASE_DIR, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    txt_path = os.path.join(reports_dir,
+                            f"obs_paper_report_{datetime.now():%Y%m%d_%H%M%S}.txt")
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print(f"\n报表已保存：{txt_path}")
+
+
 def cmd_monitor(args):
     """策略衰减监控体检表。"""
     from monitor import build_monitor
@@ -447,6 +506,12 @@ def main():
 
     p_pf = sub.add_parser("paper-portfolio", help="组合视图：跨台账 P2 风险平价合成（只读）")
     p_pf.set_defaults(func=cmd_paper_portfolio)
+
+    p_po_u = sub.add_parser("paper-obs-update", help="观察账户 6/7（QQQ×H2、159915×RSI2）每日更新")
+    p_po_u.set_defaults(func=cmd_paper_obs_update)
+
+    p_po_r = sub.add_parser("paper-obs-report", help="观察账户 6/7 台账报表")
+    p_po_r.set_defaults(func=cmd_paper_obs_report)
 
     p_mo = sub.add_parser("monitor", help="策略衰减监控体检表")
     p_mo.set_defaults(func=cmd_monitor)

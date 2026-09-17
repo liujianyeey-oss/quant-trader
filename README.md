@@ -2,7 +2,7 @@
 
 基于 Python + akshare 的 A股量化研究工具，支持 ETF/个股的历史回测与每日持仓信号提醒。**不做实盘，仅供研究学习，不构成任何投资建议。**
 
-> 建设期的全部教训（方法论/工程/运维）见 **[docs/LESSONS.md](docs/LESSONS.md)**——改代码或调参数前先读它。
+> 建设期的全部教训（方法论/工程/运维）见 **[docs/LESSONS.md](docs/LESSONS.md)**——改代码或调参数前先读它。晋升/换参/干预的权威规则见 **[docs/GOVERNANCE.md](docs/GOVERNANCE.md)**。
 
 美股正股现金短线模块 `us_swing` 已完成84组开发比较，训练选定10日相对强度轮动。复现选定版本：`python main.py backtest --strategy us_swing --research --offline --params us_equities/research_selected.json`。全期累计262.96%、年化18.27%、最大回撤29.42%，但高滑点下失效，详见 **[美股结果报告](docs/US_SWING_RESULTS.md)** 和 **[算法说明](docs/US_SWING.md)**。结果有选样和数据覆盖偏差，不代表未来收益。
 

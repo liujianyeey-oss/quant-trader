@@ -1,0 +1,13 @@
+{
+  "cash": 50000.0,
+  "shares": 0,
+  "cost_basis": 0.0,
+  "pending": {
+    "signal_date": "2026-09-15",
+    "target": {},
+    "reason": "donchian 20/10+H2：收盘 704.54，空仓，H2窗口开启",
+    "signal_close": {}
+  },
+  "last_signal_date": "2026-09-15",
+  "executed": false
+}
