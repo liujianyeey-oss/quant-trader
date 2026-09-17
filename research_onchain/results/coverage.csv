@@ -1,0 +1,9 @@
+metric,rows,start,end
+hash_rate,2806,2019-01-01,2026-09-16
+n_transactions,1611,2009-01-17,2026-09-15
+n_unique_addresses,1608,2009-01-03,2026-09-15
+AdrActCnt,2816,2019-01-01,2026-09-16
+TxCnt,2816,2019-01-01,2026-09-16
+FlowNetExch,0,-,-
+SplyExchBal,0,-,-
+NVTAdj,0,-,-
