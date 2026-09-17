@@ -1,0 +1,55 @@
+A股数据截至 2026-09-16
+
+== ① T+1 税方向测量 ==
+   bucket   n mean_bps median_bps p25_bps p75_bps
+(159915,) 196    +12.3       -3.4   -27.3   +23.4
+(510300,) 149     -2.4       -3.0   -20.6    +9.3
+(510500,) 138     -9.2       -5.6   -19.5    +6.3
+(518880,) 172     +5.6       +3.6   -24.2   +41.0
+(588000,)  97     -4.4       +0.0   -37.0   +23.4
+  ALL_进攻池 580     +0.6       -3.8   -26.2   +16.7
+ year  count  mean median
+ 2017     40  -9.0   -7.0
+ 2018     34 -27.0  -11.6
+ 2019     67  +5.9   +0.0
+ 2020     78  +0.1   +0.0
+ 2021     71 -12.2   -6.8
+ 2022     42 -10.7   -9.5
+ 2023     26 +10.0   +8.7
+ 2024     98 +22.3   -6.0
+ 2025     87  -9.5   -4.9
+ 2026     37 +24.9  +30.5
+
+== ② 日历效应 ==
+segment              full train  valid
+symbol variant                        
+510300 C1_月末效应       0.14  0.34  -0.20
+       C2_sellinmay  0.09  0.07   0.29
+       买入持有          0.19  0.13   0.79
+QQQ    C1_月末效应       0.23  0.36   0.02
+       C2_sellinmay  0.32  0.42   0.19
+       买入持有          0.63  0.62   1.02
+
+== ③ 低波横截面 ==
+拉取 511010 失败(第1次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 511010 失败(第2次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 511010 失败(第3次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 511010 失败(第4次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 511010 失败(第5次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 511010 失败(第6次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+拉取 511010 失败(第7次): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+segment                    full report train valid
+universe variant                                  
+A股6只     A股510300持有        0.18      -  0.13  0.79
+         A股低波top2月调(功效不足)  0.34      -  0.22  1.61
+US核心25   SPY持有             0.46      -  0.34  2.28
+         低波top5月调          0.02  -0.34  0.06  0.05
+         动量top5月调          0.33   0.94  0.30  0.16
+
+== ④ VIX 只减不加 ==
+segment          full report train valid
+variant                                 
+VIX只减不加          0.71   0.43  0.46  2.32
+基准_donchian_QQQ  0.83   0.91  0.73  2.32
+
+结果 CSV：/Users/liujianye10/quant-trader/research_r9/results
