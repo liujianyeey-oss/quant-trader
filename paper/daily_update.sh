@@ -5,5 +5,7 @@
 cd /Users/liujianye10/quant-trader || exit 1
 mkdir -p logs
 .venv/bin/python main.py paper-update >> logs/paper_cron.log 2>&1
+# D1 防守池轮动影子台账（S2 影子运行，失败不影响主流程）
+.venv/bin/python main.py paper-shadow-update >> logs/paper_shadow_cron.log 2>&1 || true
 # 信号变化时弹 macOS 通知（失败不影响主流程）
 .venv/bin/python paper/notify_signal_change.py >> logs/paper_cron.log 2>&1 || true

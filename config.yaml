@@ -34,7 +34,7 @@ cost:
   stock_commission: 0.00025   # 个股佣金 万2.5
   stamp_tax: 0.0005           # 卖出印花税 0.05%（仅个股）
   slippage: 0.001             # 滑点 0.1%
-  min_commission: 0           # 最低佣金（元），0 表示不启用；券商常见为 5
+  min_commission: 5           # 最低佣金（元/笔），0 表示不启用；A股券商通行 5 元（2026-11-08 起按 5 建模，历史成交不改写）
 
 # 回测
 backtest:

@@ -148,6 +148,37 @@ def cmd_paper_update(args):
             print(action)
 
 
+def cmd_paper_shadow_update(args):
+    """D1 防守池轮动影子台账每日更新（随 daily_update.sh 运行）。
+
+    与实际台账共用数据与 update_account 流程（含数据完整性闸门、T+1、幂等），
+    账户文件独立存放于 paper_shadow/，不影响任何现有台账。
+    """
+    from d1 import D1_EXTRA_CODES
+    from paper_shadow import update
+
+    cfg = load_config(args.config)
+    loader = build_loader(cfg)
+    end = datetime.now().strftime("%Y-%m-%d")
+    fetch_start = (pd.Timestamp(cfg["backtest"]["start"])
+                   - pd.Timedelta(days=450)).strftime("%Y-%m-%d")
+    paper_dir = os.path.join(BASE_DIR, "paper")
+    shadow_dir = os.path.join(BASE_DIR, "paper_shadow")
+    os.makedirs(shadow_dir, exist_ok=True)
+
+    codes = (cfg["universe"]["etfs"] + cfg["universe"]["stocks"]
+             + [cfg["universe"]["defensive"]] + D1_EXTRA_CODES)
+    codes = list(dict.fromkeys(codes))
+    data, stock_set = load_universe_data(cfg, loader, fetch_start, end, codes=codes)
+    if not data:
+        print("错误：无可用数据，影子台账更新终止", file=sys.stderr)
+        sys.exit(1)
+    latest = max(df["date"].max() for df in data.values())
+    print(f"影子台账数据截至 {latest:%Y-%m-%d}")
+    for action in update(cfg, data, paper_dir, shadow_dir, stock_set):
+        print(action)
+
+
 def cmd_paper_report(args):
     from paper import TRACKED_STRATEGIES, build_report, plot_paper_nav
 
@@ -597,6 +628,9 @@ def main():
 
     p_pu = sub.add_parser("paper-update", help="模拟盘台账每日更新（建议收盘后运行）")
     p_pu.set_defaults(func=cmd_paper_update)
+
+    p_psu = sub.add_parser("paper-shadow-update", help="D1 防守池轮动影子台账每日更新")
+    p_psu.set_defaults(func=cmd_paper_shadow_update)
 
     p_pr = sub.add_parser("paper-report", help="模拟盘台账分析报表")
     p_pr.set_defaults(func=cmd_paper_report)

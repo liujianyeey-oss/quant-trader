@@ -58,6 +58,76 @@ class PaperTests(unittest.TestCase):
         self.dir = tempfile.mkdtemp()
         self.cfg = make_cfg()
 
+    def append_day_partial(self, data, skip_codes=()):
+        """给除 skip_codes 外的标的追加一个交易日（模拟数据源延迟/缺失）。"""
+        new_date = max(df["date"].max() for df in data.values()) + pd.offsets.BDay(1)
+        for code in CODES:
+            if code in skip_codes:
+                continue
+            p = 100.0 if code == "GOLD" else float(
+                data[code]["close"].iloc[-1] * (1.01 if code == "A" else 1.0))
+            row = pd.DataFrame({"date": [new_date], "open": [p], "close": [p],
+                                "high": [p], "low": [p], "volume": [1]})
+            data[code] = pd.concat([data[code], row], ignore_index=True)
+        return new_date
+
+    def append_rows(self, data, code, dates, price):
+        """给单个标的补指定日期的行（模拟延迟数据补齐/停牌后恢复）。"""
+        rows = pd.DataFrame({"date": list(dates), "open": [price] * len(dates),
+                             "close": [price] * len(dates), "high": [price] * len(dates),
+                             "low": [price] * len(dates), "volume": [1] * len(dates)})
+        data[code] = (pd.concat([data[code], rows], ignore_index=True)
+                      .sort_values("date").reset_index(drop=True))
+
+    def test_partial_data_day_blocked_then_recovered(self):
+        """最新日部分标的缺数据（源未产出）：当日不推进水位线、不算信号；
+        数据补齐后由后续运行自然补记；全程幂等。"""
+        data = make_data()
+        update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (1, 1, 0))
+
+        # d2：GOLD 当日数据未产出（其余标的正常）
+        d2 = self.append_day_partial(data, skip_codes=("GOLD",))
+        actions = update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (1, 1, 0))  # 水位线不推进
+        self.assertTrue(any("数据未齐" in a and "GOLD" in a for a in actions))
+        # 重复运行仍然不动（幂等）
+        update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (1, 1, 0))
+
+        # GOLD 的 d2 数据补齐（如 18:23 兜底运行时源已产出）
+        self.append_rows(data, "GOLD", [d2], 100.0)
+        update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (2, 2, 1))  # d2 正常补记并成交
+        nav = _read_csv(_csv_path(self.dir, "nav", "momentum"))
+        self.assertEqual(nav["date"].iloc[-1], d2)
+        trades = _read_csv(_csv_path(self.dir, "trades", "momentum"))
+        self.assertEqual(trades.iloc[0]["date"], d2)
+        # 再跑幂等
+        update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (2, 2, 1))
+
+    def test_suspension_gap_allowed_with_later_data(self):
+        """标的缺中间某日但之后有数据（=停牌/单日缺行情）：不阻塞，走 ffill 旧逻辑。"""
+        data = make_data()
+        update_account(self.cfg, "momentum", data, self.dir)
+        d2 = self.append_day_partial(data)  # 全日数据正常
+        update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (2, 2, 1))  # 已买入 A
+
+        # d3：GOLD 无当日行（实时看与源延迟不可区分 → 先阻塞）
+        d3 = self.append_day_partial(data, skip_codes=("GOLD",))
+        actions = update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (2, 2, 1))
+        self.assertTrue(any("数据未齐" in a for a in actions))
+
+        # d4：GOLD 恢复有行（d3 成为"缺当日但有更晚数据"的停牌缺口）→ d3/d4 一起补记
+        d4 = self.append_day_partial(data)
+        update_account(self.cfg, "momentum", data, self.dir)
+        self.assertEqual(self.counts(), (4, 4, 1))
+        nav = _read_csv(_csv_path(self.dir, "nav", "momentum"))
+        self.assertEqual(list(nav["date"][-2:]), [d3, d4])
+
     def counts(self, name="momentum"):
         nav = _read_csv(_csv_path(self.dir, "nav", name))
         sig = _read_csv(_csv_path(self.dir, "signals", name))

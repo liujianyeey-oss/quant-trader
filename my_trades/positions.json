@@ -6,7 +6,20 @@
       "weight": 1.0,
       "entry_price": 76206.0,
       "entry_date": "2026-09-17",
-      "note": "用户手动操作，非策略信号"
+      "note": "用户手动操作，非策略信号",
+      "exit_plan": {
+        "hard_stop": 74968,
+        "hard_stop_note": "收盘跌破全出(缓冲74200)",
+        "vol_stop": 72350,
+        "vol_stop_note": "2×ATR",
+        "tp1_zone": [
+          82300,
+          83900
+        ],
+        "tp1_note": "减1/3~1/2, 余仓止损上移成本",
+        "trail": "MA20(动态)"
+      },
+      "planned_exit_summary": "收盘破74,968全出; 82,300-83,900减1/3; 余仓MA20跟踪"
     }
   ]
 }

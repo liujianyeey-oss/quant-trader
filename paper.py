@@ -69,8 +69,11 @@ SIGNAL_COLUMNS = ["date", "target", "reason"]
 
 # ---------- 每日更新 ----------
 
-def update_account(cfg, name, data, paper_dir, stock_codes=()):
+def update_account(cfg, name, data, paper_dir, stock_codes=(), strategy=None):
     """更新一个策略账户。data 只含已完成日线。返回动作描述列表。
+
+    strategy：默认按 name 从 STRATEGIES 实例化；影子账户注入策略实例
+    （如 D1 变体），其余流程（执行/估值/闸门/幂等）完全一致。
 
     逐日处理净值水印之后的所有新交易日（支持多日故障后的补记）：
     每个新交易日依次：① 用当日开盘价执行上一待成交目标（目标未变且策略非
@@ -78,7 +81,7 @@ def update_account(cfg, name, data, paper_dir, stock_codes=()):
     ② 记录当日生效目标为新待成交；③ 以收盘价估值追加净值。
     """
     initial = cfg["backtest"]["initial_cash"]
-    strategy = STRATEGIES[name](cfg)
+    strategy = strategy or STRATEGIES[name](cfg)
     state = load_state(paper_dir, name, initial)
     state.setdefault("executed_target", {})
     actions = []
@@ -105,6 +108,18 @@ def update_account(cfg, name, data, paper_dir, stock_codes=()):
     bt = Backtester(cfg, stock_codes=stock_codes)
     cost_cfg = cfg["cost"]
     for date in new_dates:
+        # 数据完整性闸门（2026-10-09 教训：部分标的当日数据未产出时，并集日历
+        # 会提前推进水位线——持仓按 ffill 旧价记平、残缺截面信号永久留档、
+        # 兜底 cron 被水位线架空）。任一标的缺当日行且其后仍无数据（=数据源
+        # 尚未产出，非停牌）→ 当日不记账、不推进水位线，待补齐后自然补记；
+        # 缺当日行但有更晚数据 = 停牌/单日缺行情，维持 ffill 旧逻辑。
+        missing = [c for c in close_panel.columns
+                   if pd.isna(close_panel.loc[date, c])
+                   and not close_panel[c].loc[date:].iloc[1:].notna().any()]
+        if missing:
+            actions.append(f"{name}: {date:%Y-%m-%d} 数据未齐（缺 {missing} 当日数据，"
+                           f"数据源可能尚未产出），当日不记账，待补齐后自动补记")
+            break
         open_row = open_panel.loc[date]
         close_row = close_panel.loc[date]
         deferred = False
@@ -245,7 +260,12 @@ def _monthly_text(nav: pd.Series) -> list:
 def build_report(cfg, data_map, bench, paper_dir):
     """生成中文分析报表文本。data_map: {strategy_name: data}。"""
     initial = cfg["backtest"]["initial_cash"]
-    lines = [f"===== 模拟盘台账报表（{datetime.now():%Y-%m-%d %H:%M}）====="]
+    cost = cfg["cost"]
+    lines = [f"===== 模拟盘台账报表（{datetime.now():%Y-%m-%d %H:%M}）=====",
+             f"成本口径：ETF 佣金 {cost['etf_commission']:.2%}、"
+             f"最低佣金 {cost.get('min_commission') or 0:.0f} 元/笔"
+             f"（2026-11-08 起生效，历史成交不改写）、"
+             f"滑点 {cost['slippage']:.1%}、100 股整数倍"]
     nav_curves, ideal_curves = {}, {}
 
     for name in TRACKED_STRATEGIES:
@@ -310,6 +330,12 @@ def build_report(cfg, data_map, bench, paper_dir):
         b = bench[bench.index >= start]
         if not b.empty:
             lines.append(f"\n同期基准 {cfg.get('benchmark')}：{b.iloc[-1] / b.iloc[0] - 1:+.2%}")
+
+    # 影子对照（D1 防守池轮动影子台账，存在时追加；不影响主报表结构）
+    from paper_shadow import shadow_compare_lines
+    lines += shadow_compare_lines(paper_dir,
+                                  os.path.join(os.path.dirname(paper_dir), "paper_shadow"),
+                                  nav_curves)
     return "\n".join(lines), nav_curves, ideal_curves
 
 

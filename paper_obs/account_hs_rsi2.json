@@ -3,11 +3,11 @@
   "shares": 0,
   "cost_basis": 0.0,
   "pending": {
-    "signal_date": "2026-09-16",
+    "signal_date": "2026-11-06",
     "target": {},
-    "reason": "RSI2=66.8，MA200=3.51，MA5=3.32，收盘=3.33 → 空仓",
+    "reason": "RSI2=31.4，MA200=3.47，MA5=2.50，收盘=2.48 → 空仓",
     "signal_close": {}
   },
-  "last_signal_date": "2026-09-16",
+  "last_signal_date": "2026-11-06",
   "executed": false
 }

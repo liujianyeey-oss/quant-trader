@@ -1,13 +1,13 @@
 {
-  "cash": 50000.0,
+  "cash": 48394.996754642496,
   "shares": {},
   "cost_basis": {},
   "pending": {
-    "signal_date": "2026-09-15",
+    "signal_date": "2026-11-05",
     "target": {},
-    "reason": "donchian 20/10：收盘价 704.54，当前状态：空仓 QQQ",
+    "reason": "donchian 20/10：收盘价 647.05，当前状态：空仓 QQQ",
     "signal_close": {}
   },
-  "last_signal_date": "2026-09-15",
+  "last_signal_date": "2026-11-05",
   "executed_target": {}
 }

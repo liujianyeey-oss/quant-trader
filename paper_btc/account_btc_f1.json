@@ -1,15 +1,15 @@
 {
-  "cash": 50000.0,
+  "cash": 47003.473008003224,
   "shares": 0.0,
   "cost_basis": 0.0,
   "pending": {
-    "signal_date": "2026-09-16",
+    "signal_date": "2026-11-08",
     "target": {},
-    "reason": "BTC 唐奇安20/10+F1：收盘 $76,206，空仓",
+    "reason": "BTC 唐奇安20/10+F1：收盘 $74,851，空仓",
     "signal_close": {
-      "BTC": 76206.01
+      "BTC": 74851.44
     }
   },
-  "last_signal_date": "2026-09-16",
+  "last_signal_date": "2026-11-08",
   "executed": true
 }
